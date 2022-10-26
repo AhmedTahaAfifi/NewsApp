@@ -1,4 +1,4 @@
-package com.example.newsapp
+package com.example.newsapp.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsapp.Constants
+import com.example.newsapp.NewsDetailsActivity
+import com.example.newsapp.R
 import com.example.newsapp.adapter.NewsAdapter
 import com.example.newsapp.api.ApiManager
 import com.example.newsapp.model.ArticlesItem
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getNewsSources() {
         ApiManager.getApi()
-            .getSources(Constants.apiKey)
+            .getSources(Constants.apiKey, "")
             .enqueue(object : Callback<SourcesResponse> {
                 override fun onFailure(call: Call<SourcesResponse>, t: Throwable) {
                     t.localizedMessage?.let {
