@@ -1,13 +1,15 @@
-package com.example.newsapp.adapter
+package com.example.newsapp.ui.news
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapp.R
+import com.example.newsapp.databinding.ItemNewsBinding
 import com.example.newsapp.model.ArticlesItem
 
 
@@ -15,28 +17,32 @@ class NewsAdapter(var items: List<ArticlesItem?>?) :
     RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val title: TextView = itemView.findViewById(R.id.title)
-        val sourceName: TextView = itemView.findViewById(R.id.source_name)
-        val dateTime: TextView = itemView.findViewById(R.id.date_time)
-        val image: ImageView = itemView.findViewById(R.id.image)
+    class ViewHolder(val itemBinding: ItemNewsBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+        //        val title: TextView = itemView.findViewById(R.id.title)
+//        val sourceName: TextView = itemView.findViewById(R.id.source_name)
+//        val dateTime: TextView = itemView.findViewById(R.id.date_time)
+//        val image: ImageView = itemView.findViewById(R.id.image)
+        fun bind(item: ArticlesItem?) {
+            itemBinding.item = item
+            itemBinding.invalidateAll()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_news, parent, false)
-        return ViewHolder(view)
+//        val view = LayoutInflater.from(parent.context)
+//            .inflate(R.layout.item_news, parent, false)
+//        return ViewHolder(view)
+        val viewBinding: ItemNewsBinding =
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_news, parent, false
+            )
+        return ViewHolder(viewBinding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items?.get(position)
-        holder.title.text = item?.title
-        holder.sourceName.text = item?.author
-        holder.dateTime.text = item?.publishedAt
-        Glide.with(holder.itemView)
-            .load(item?.urlToImage)
-            .into(holder.image)
-
+        holder.bind(item)
         if (onClickListener != null) {
             holder.itemView.setOnClickListener {
                 onClickListener?.onItemClick(position, item)

@@ -9,9 +9,5 @@
             android:id="@+id/category"
             android:icon="@drawable/ic_categorys"
             android:title="Category" />
-        <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_settings"
-            android:title="Settings" />
     </group>
 </menu>
