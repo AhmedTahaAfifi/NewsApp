@@ -1,5 +1,6 @@
 package com.example.newsapp.ui.news
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,13 +13,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapp.R
 import com.example.newsapp.databinding.FragmentNewsBinding
 import com.example.newsapp.model.*
 import com.example.newsapp.ui.fragment.NewsDetailsFragment
 import com.google.android.material.tabs.TabLayout
+import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import javax.inject.Inject
+
+@AndroidEntryPoint
 class NewsFragment : Fragment() {
 
     lateinit var viewDataBinding: FragmentNewsBinding
@@ -26,7 +32,7 @@ class NewsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
 //        return inflater.inflate(R.layout.fragment_news, container, false)
         viewDataBinding = DataBindingUtil.inflate(
@@ -46,6 +52,7 @@ class NewsFragment : Fragment() {
         viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
     }
 
+    lateinit var layoutManger: LinearLayoutManager
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -53,7 +60,9 @@ class NewsFragment : Fragment() {
         viewModel.getNewsSources(category)
     }
 
-    val adapter = NewsAdapter(null)
+
+    @Inject
+    lateinit var adapter: NewsAdapter
 
     fun initView() {
         viewDataBinding.recyclerView.adapter = adapter
@@ -117,6 +126,7 @@ class NewsFragment : Fragment() {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     val source = tab?.tag as SourcesItem
                     viewModel.getNewsBySource(source)
+
 //                    getNewsBySource(source)
                 }
 

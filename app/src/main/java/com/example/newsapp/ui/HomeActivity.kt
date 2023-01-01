@@ -11,7 +11,9 @@ import com.example.newsapp.ui.categories.CategoryFragment
 import com.example.newsapp.ui.news.NewsFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
 
     val categoryFragment = CategoryFragment()

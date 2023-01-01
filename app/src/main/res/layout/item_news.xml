@@ -8,7 +8,7 @@
         <variable
             name="item"
             type="com.example.newsapp.model.ArticlesItem" />
-        .
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
